@@ -12,3 +12,8 @@ _start:
   mov   rsi,message  ;aponto para o endereço onde esta armazenado a mensagem
   mov   rdx,14       ;informo a quantidades de bytes
   syscall            ;chamo o syscall
+
+;codigo para terminar o programa
+  mov   rax,60       ;chamada para sair do syscall
+  xor   rdi,rdi      ;reseta o valores do bytes
+  syscall

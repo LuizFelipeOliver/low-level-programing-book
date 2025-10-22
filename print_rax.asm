@@ -19,4 +19,25 @@ _start:
   push rax
   sub rcx, 4
   ;cl é um registro, a parte menor de rcx
+  ;rax -- eax -- ax -- ah + al
+  ;rcx -- eax -- cx -- ch + cl
+  sar rax, cl
+  and rax, 0xf
 
+  lea rsi, [code + rax]
+  mov rax, 1
+
+  ;syscall deixa rcx e r11 alterados
+  push rcx
+  syscall
+  pop rcx
+
+  pop rax
+  ;test pode ser usado para uma verificação mais rápida do tipo 'é um zero ?'
+  ;consulte a documentação do comando 'test'
+  test rcx, rcx
+  jnz .loop
+
+  mov rax,60 ; faz o chamado do sistema 'exit'
+  xor rdi,rdi
+  syscall
